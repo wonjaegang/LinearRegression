@@ -76,10 +76,6 @@ class Particle(pygame.Rect):
                               , enumerate(self.direction)))
         self.location = list(map(lambda x, y: x + y, self.location, self.direction))
 
-        # GUI: 위치값 업데이트
-        self.left = self.location[0] + SCREEN_SIZE / 2
-        self.top = self.location[1] + SCREEN_SIZE / 2
-
     # 현재의 손실함수 값과 자신의 최저손실함수 값, 전역최저손실함수 값을 비교하여 업데이트
     def updateBest(self):
         currentCost = self.calculateCost()
@@ -104,6 +100,12 @@ class Particle(pygame.Rect):
             cost_average = calculateAverage(cost_average, i + 1, cost)
         return cost_average
 
+    def drawParticle(self):
+        # GUI: 위치값 업데이트
+        self.left = self.location[0] + SCREEN_SIZE / 2
+        self.top = self.location[1] + SCREEN_SIZE / 2
+        pygame.draw.rect(screen, RED, self)
+
 
 # 재귀식 평균계산 함수
 def calculateAverage(lastAverage, n, an):
@@ -126,7 +128,7 @@ if __name__ == "__main__":
         for particle in particleList:
             particle.moveParticle()
             particle.updateBest()
-            pygame.draw.rect(screen, RED, particle)
+            particle.drawParticle()
         print("Iteration #%d - Global lowest cost: %.20f" % (simulation, Particle.globalBestCost))
         pygame.display.update()
         pygame.time.wait(50)
