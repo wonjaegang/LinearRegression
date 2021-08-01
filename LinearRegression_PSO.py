@@ -45,8 +45,12 @@ def printGrid():
     font = pygame.font.SysFont('arial', 20, True, False)
     gains = font.render("W = %.3f     C1 = %.3f     C2 = %.3f" % (Particle.w, Particle.c1, Particle.c2), True, BLACK)
     globalBest = font.render("Global lowest loss function: %.20f" % Particle.globalBestCost, True, BLACK)
-    screen.blit(gains, (500, 20))
-    screen.blit(globalBest, (500, 45))
+    x = font.render("→ x", True, BLACK)
+    y = font.render("↑ y", True, BLACK)
+    screen.blit(x, (960, 470))
+    screen.blit(y, (505, 5))
+    screen.blit(gains, (5, 20))
+    screen.blit(globalBest, (5, 45))
 
 
 class Particle(pygame.Rect):
@@ -103,7 +107,7 @@ class Particle(pygame.Rect):
     def drawParticle(self):
         # GUI: 위치값 업데이트
         self.left = self.location[0] + SCREEN_SIZE / 2
-        self.top = self.location[1] + SCREEN_SIZE / 2
+        self.top = SCREEN_SIZE - (self.location[1] + SCREEN_SIZE / 2)
         pygame.draw.rect(screen, RED, self)
 
 
